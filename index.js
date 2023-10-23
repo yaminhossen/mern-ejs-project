@@ -1,6 +1,13 @@
 const express = require('express');
 const server = express();
 const session = require('express-session')
+const bodyParser = require('body-parser')
+
+// parse application/x-www-form-urlencoded
+server.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+server.use(bodyParser.json())
 
 server.set('trust proxy', 1) // trust first proxy
 server.use(session({
@@ -21,6 +28,12 @@ server.get('/about', function (req, res) {
 })
 server.get('/login', function (req, res) {
     return res.render('auth/login')
+})
+server.post('/login-submit', function (req, res) {
+    // console.log(req.session);
+    req.session.isAuth = true;
+    res.json(req.body);
+    // return res.render('auth/login')
 })
 server.get('/dashboard', function (req, res) {
     console.log(req.session);
