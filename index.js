@@ -18,6 +18,15 @@ server.use(session({
 server.set('view engine', 'ejs')
 server.set('views', './views')
 server.use(express.static('public'))
+server.locals.checkIsAuth = false;
+
+const isAuth = (req, res, next) =>{
+    if(req.session.isAuth){
+        next();
+    }else{
+        res.redirect('/login')
+    }
+}
 
 server.get('/', function (req, res) {
     return res.render('home')
@@ -27,20 +36,28 @@ server.get('/about', function (req, res) {
     return res.render('about')
 })
 server.get('/login', function (req, res) {
+    
     return res.render('auth/login')
 })
 server.post('/login-submit', function (req, res) {
     // console.log(req.session);
     req.session.isAuth = true;
-    res.json(req.body);
-    // return res.render('auth/login')
+    server.locals.checkIsAuth = true;
+    res.redirect('/dashboard')
+    // res.json(req.body);
+
 })
-server.get('/dashboard', function (req, res) {
+server.get('/dashboard', isAuth, function (req, res) {
     console.log(req.session);
     return res.render('backend/dashboard')
 })
-server.get('/dashboard/create-blog', function (req, res) {
+server.get('/dashboard/create-blog',isAuth,  function (req, res) {
     return res.render('backend/create_blog')
+})
+server.get('/logout',isAuth, function (req, res) {
+    req.session.isAuth = false;
+    server.locals.checkIsAuth = false;
+    res.redirect('/');
 })
 
 server.listen(5005, () => {
