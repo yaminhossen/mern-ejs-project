@@ -61,6 +61,9 @@ server.get('/dashboard', isAuth, function (req, res) {
 server.get('/dashboard/create-blog', isAuth, function (req, res) {
     return res.render('backend/create_blog')
 })
+server.get('/dashboard/blog', isAuth, function (req, res) {
+    return res.render('backend/blog_management/all')
+})
 server.get('/logout', isAuth, function (req, res) {
     req.session.isAuth = false;
     server.locals.checkIsAuth = false;
