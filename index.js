@@ -1,7 +1,8 @@
 const express = require('express');
 const server = express();
 const session = require('express-session')
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const allRoutes = require('./routes/all.routes');
 
 // parse application/x-www-form-urlencoded
 server.use(bodyParser.urlencoded({ extended: false }))
@@ -54,16 +55,14 @@ server.post('/login-submit', function (req, res) {
     // res.json(req.body);
 
 })
+
+
+
 server.get('/dashboard', isAuth, function (req, res) {
     console.log(req.session);
     return res.render('backend/dashboard')
 })
-server.get('/dashboard/create-blog', isAuth, function (req, res) {
-    return res.render('backend/create_blog')
-})
-server.get('/dashboard/blog', isAuth, function (req, res) {
-    return res.render('backend/blog_management/all')
-})
+server.use(allRoutes)
 server.get('/logout', isAuth, function (req, res) {
     req.session.isAuth = false;
     server.locals.checkIsAuth = false;
