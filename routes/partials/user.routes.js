@@ -4,7 +4,6 @@ const router = express.Router()
 
 
 router
-    .use(isAuthMiddlewere)
     .get('/dashboard/user', function (req, res) {
         return res.render('backend/user_management/all')
     })

@@ -4,7 +4,6 @@ const router = express.Router()
 
 
 router
-    .use(isAuthMiddlewere)
     .get('/dashboard/email', function (req, res) {
         return res.render('backend/email_management/all')
     })
