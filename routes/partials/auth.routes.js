@@ -6,7 +6,7 @@ router.get('/logout', function (req, res) {
     console.log('logout api hited');
     req.session.isAuth = false;
     server.locals.checkIsAuth = false;
-    res.redirect('/');
+    return res.redirect('/');
 })
 
 module.exports = () => router;
