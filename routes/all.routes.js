@@ -10,11 +10,11 @@ const websiteRoutes = require('./partials/website.routes')
 const router = express.Router()
 
 router.use(websiteRoutes());
+router.use(authRoutes());
 router.use(isAuthMiddlewere());
 router.use(blogRoutes());
 router.use(userRoutes());
 router.use(emailRoutes());
 router.use(dashboardRoutes());
-router.use(authRoutes());
 
 module.exports = ()=> router;
